@@ -1,43 +1,37 @@
 {
-  "name": "cross-domain-communication",
-  "version": "1.0.1",
-  "repository": {
-    "url": "https://github.com/WilbertBocanegra/cross-domain-communication.git"
-  },
-  "author": {
-    "name": "Core Team SoftEngy"
-  },
-  "devDependencies": {
-    "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "next",
-    "@sveltejs/package": "next",
-    "@typescript-eslint/eslint-plugin": "^5.36.2",
-    "@typescript-eslint/parser": "^5.36.2",
-    "eslint": "^8.23.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-svelte3": "^4.0.0",
-    "prettier": "^2.7.1",
-    "prettier-plugin-svelte": "^2.7.0",
-    "svelte": "^3.50.0",
-    "svelte-check": "^2.9.0",
-    "svelte-preprocess": "^4.10.7",
-    "tslib": "^2.4.0",
-    "typescript": "^4.8.2",
-    "vite": "^3.1.0"
-  },
-  "type": "module",
-  "exports": {
-    "./package.json": "./package.json",
-    ".": "./index.js",
-    "./src/components/IFrame.svelte": "./src/components/IFrame.svelte",
-    "./src/components": "./src/components/index.js",
-    "./src/enum": "./src/enum/index.js",
-    "./src/enum/message": "./src/enum/message.js",
-    "./src/interfaces": "./src/interfaces/index.js",
-    "./src/interfaces/message": "./src/interfaces/message.js",
-    "./src/lib/get": "./src/lib/get.js",
-    "./src/lib": "./src/lib/index.js",
-    "./src/lib/set": "./src/lib/set.js"
-  },
-  "svelte": "./index.js"
+	"name": "cross-domain-communication",
+	"version": "1.0.3",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "svelte-kit sync && svelte-package",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
+	},
+	"repository": {
+		"url": "https://github.com/WilbertBocanegra/cross-domain-communication.git"
+	},
+	"author": {
+		"name": "Core Team SoftEngy"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/kit": "next",
+		"@sveltejs/package": "next",
+		"@typescript-eslint/eslint-plugin": "^5.36.2",
+		"@typescript-eslint/parser": "^5.36.2",
+		"eslint": "^8.23.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"prettier": "^2.7.1",
+		"prettier-plugin-svelte": "^2.7.0",
+		"svelte": "^3.50.0",
+		"svelte-check": "^2.9.0",
+		"svelte-preprocess": "^4.10.7",
+		"tslib": "^2.4.0",
+		"typescript": "^4.8.2",
+		"vite": "^3.1.0"
+	},
+	"type": "module"
 }

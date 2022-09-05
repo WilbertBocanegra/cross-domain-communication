@@ -17,12 +17,12 @@ Install my-project with npm
 ```javascript
 <CreateIFrame whiteList={origin} />
 
-await get({ iframe:"xxx.xxx.xxx", key: 'xxx' })
+await get({ iframe:"xxx.xxx.xxx", key: 'get' })
 
 await set({
 			iframe: 'xx.xx.xxx',
 			key: 'set',
-			data: 'hola desde el front 1'
+			data: 'hello'
 	});
 ```
 
