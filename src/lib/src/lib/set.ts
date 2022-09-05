@@ -14,7 +14,7 @@ const set: Handle = ({ key, iframe, data }) =>
 			}
 			if (e.data.action === EMessage.SET) {
 				localStorage.setItem(e.data.key, e.data.data);
-				document.body.removeChild(node);
+				node.remove();
 				resolve({ key: e.data.key, data: e.data.data, message: e.data.message });
 			}
 		});
@@ -25,7 +25,7 @@ const set: Handle = ({ key, iframe, data }) =>
 			}
 			if (e.data.action === EMessage.SET) {
 				localStorage.setItem(e.data.key, e.data.data);
-				document.body.removeChild(node);
+				node.remove();
 				resolve({ key: e.data.key, data: e.data.data, message: e.data.message });
 			}
 		});

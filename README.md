@@ -15,7 +15,7 @@ Install my-project with npm
 ## Usage/Examples
 
 ```javascript
-<CreateIFrame whiteList={origin} />
+<IFrame whiteList={origin} />
 
 await get({ iframe:"xxx.xxx.xxx", key: 'get' })
 

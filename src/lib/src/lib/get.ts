@@ -16,7 +16,7 @@ const get: HandleGet = ({ key, iframe }) =>
 				if (e.data.data !== null) {
 					localStorage.setItem(e.data.key, e.data.data);
 				}
-				document.body.removeChild(node);
+				node.remove();
 				resolve({ key: e.data.key, data: e.data.data, message: e.data.message });
 			}
 		});
@@ -29,7 +29,7 @@ const get: HandleGet = ({ key, iframe }) =>
 				if (e.data.data !== null) {
 					localStorage.setItem(e.data.key, e.data.data);
 				}
-				document.body.removeChild(node);
+				node.remove();
 				resolve({ key: e.data.key, data: e.data.data, message: e.data.message });
 			}
 		});
