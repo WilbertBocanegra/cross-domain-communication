@@ -1,19 +1,22 @@
-interface Input {
-	iframeUrl: string;
-}
+import { client } from './client';
 
 interface ICreateIFrame {
-	(input: Input): Promise<HTMLIFrameElement>;
+	(): Promise<HTMLIFrameElement>;
 }
 
+let iframe: HTMLIFrameElement;
 
-
-const createIFrame: ICreateIFrame = ({ iframeUrl }) =>
+const createIFrame: ICreateIFrame = () =>
 	new Promise((resolve) => {
 		const iframe: HTMLIFrameElement = document.createElement('iframe');
-		iframe.src = iframeUrl;
+		iframe.src = client;
+		iframe.style.display = 'none';
 		iframe.onload = () => resolve(iframe);
 		document.body.appendChild(iframe);
 	});
 
-export { createIFrame };
+const getIFrame = async () => {
+	iframe = await createIFrame();
+};
+
+export { createIFrame, getIFrame, iframe };

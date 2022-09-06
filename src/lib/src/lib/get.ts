@@ -49,9 +49,25 @@ const get: HandleGet = ({ key, iframe }) =>
 		});
 	});
 
-const anotherGet = () =>
+interface GetResponse {
+	key: string;
+}
+
+const anotherGet = <T = unknown>({ key }: GetResponse): Promise<{ data: T }> =>
 	new Promise((resolve, reject) => {
+		if (typeof client != 'string' || client.trim() === '') {
+			throw new Error('Client config not found');
+		}
+
+		let iframe: HTMLIFrameElement;
+
+		createIFrame().then((value) => (iframe = value));
+
 		const handleMessage = (e: MessageEvent<MessageResponse>) => {
+			if (e.data.action === EMessage.MOUNT) {
+				sendMessage({ action: EMessage.GET, origin: client });
+			}
+
 			if (e.data.action === EMessage.GET) {
 				window.removeEventListener('message', handleMessage);
 			}
