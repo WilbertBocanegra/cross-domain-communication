@@ -1,4 +1,3 @@
-
 # Project Title
 
 Module to communication with iframes on svelte
@@ -10,19 +9,17 @@ Install my-project with npm
 ```bash
   npm install cross-domain-communication
 ```
-    
-    
+
 ## Usage/Examples
 
 ```javascript
-<IFrame whiteList={origin} />
+<IFrame whiteList={origin} />;
 
-await get({ iframe:"xxx.xxx.xxx", key: 'get' })
+await get({ iframe: 'xxx.xxx.xxx', key: 'get' });
 
 await set({
-			iframe: 'xx.xx.xxx',
-			key: 'set',
-			data: 'hello'
-	});
+	iframe: 'xx.xx.xxx',
+	key: 'set',
+	data: 'hello'
+});
 ```
-
