@@ -1,5 +1,7 @@
 import { EMessage } from '../enum';
 import type { Handle } from '../interfaces';
+import { createIFrame } from './createIFrame';
+import { uriIFrame } from './instance';
 
 const set: Handle = ({ key, iframe, data }) =>
 	new Promise((resolve) => {

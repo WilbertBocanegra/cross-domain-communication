@@ -1,6 +1,8 @@
 import { EMessage } from '../enum';
 import type { HandleGet } from '../interfaces';
 import { createIFrame } from '../lib/createIFrame';
+import { sendMessage } from './sendMessage';
+import { client } from './client';
 
 interface MessageResponse {
 	action: EMessage;
@@ -9,13 +11,9 @@ interface MessageResponse {
 	message: string;
 }
 
-
-
 const getInstance = () => {
 	console.log('hello');
 };
-
-
 
 const get: HandleGet = ({ key, iframe }) =>
 	new Promise((resolve) => {
@@ -51,23 +49,18 @@ const get: HandleGet = ({ key, iframe }) =>
 		});
 	});
 
-const anotherGet = () => {
-	const handleMessage = (e: MessageEvent<MessageResponse>) => {
-		console.log(e);
+const anotherGet = () =>
+	new Promise((resolve, reject) => {
+		const handleMessage = (e: MessageEvent<MessageResponse>) => {
+			if (e.data.action === EMessage.GET) {
+				window.removeEventListener('message', handleMessage);
+			}
+			if (e.data.action === EMessage.SET) {
+				window.removeEventListener('message', handleMessage);
+			}
+		};
 
-		if (e.data.action === EMessage.GET) {
-			console.log();
-
-			window.removeEventListener('message', handleMessage);
-		}
-		if (e.data.action === EMessage.SET) {
-			console.log();
-
-			window.removeEventListener('message', handleMessage);
-		}
-	};
-
-	window.addEventListener('message', handleMessage);
-};
+		window.addEventListener('message', handleMessage);
+	});
 
 export { get, anotherGet };
