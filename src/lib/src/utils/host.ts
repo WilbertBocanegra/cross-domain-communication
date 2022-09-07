@@ -32,6 +32,7 @@ const handleMessage = (e: MessageEvent<MessageEvents>) => {
 			origin: e.origin
 		});
 	}
+
 	if (e.data.action === ActionE.SET) {
 		const raw = e.data.data;
 		const value =

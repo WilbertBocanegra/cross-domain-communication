@@ -11,6 +11,7 @@ interface SendMessage {
 	data?: unknown;
 	key?: string;
 	message?: string;
+	hasPermissions?: boolean;
 }
 
 const sendRequest = ({ action, data, key, message, origin = '*' }: SendMessage) => {

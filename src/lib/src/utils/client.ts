@@ -23,10 +23,7 @@ const createIFrame = (): HTMLIFrameElement => {
 	return iframe;
 };
 
-const set = <T extends { [key: string]: unknown }>({
-	key,
-	data
-}: InputSet<T>): Promise<ResponseEvent<T>> =>
+const set = <T>({ key, data }: InputSet<T>): Promise<ResponseEvent<T>> =>
 	new Promise((resolve) => {
 		if (!client) {
 			throw new Error('Uri client not found');
@@ -43,7 +40,7 @@ const set = <T extends { [key: string]: unknown }>({
 		 */
 		const handleMessage = (e: MessageEvent<MessageEvents<T>>) => {
 			if (e.data.action === ActionE.MOUNT) {
-				if (e.data.data && !e.data.data.hasPermissions) {
+				if (e.data.data && !e.data.hasPermissions) {
 					const hub = window.open(`${client}/?sync=true`);
 
 					if (!hub || hub.closed || typeof hub.closed == 'undefined') {
@@ -80,7 +77,7 @@ const set = <T extends { [key: string]: unknown }>({
  * @param {key:string}
  * @returns
  */
-const get = <T extends { hasPermissions: boolean }>({ key }: InputGet): Promise<ResponseEvent<T>> =>
+const get = <T>({ key }: InputGet): Promise<ResponseEvent<T>> =>
 	new Promise((resolve) => {
 		if (!client) {
 			throw new Error('Uri client not found');
@@ -97,8 +94,8 @@ const get = <T extends { hasPermissions: boolean }>({ key }: InputGet): Promise<
 		 */
 		const handleMessage = (e: MessageEvent<MessageEvents<T>>) => {
 			if (e.data.action === ActionE.MOUNT) {
-				const { data } = e.data;
-				if (data && !data.hasPermissions) {
+				const { data, hasPermissions } = e.data;
+				if (data && !hasPermissions) {
 					const hub = window.open(`${client}/?sync=true`);
 
 					if (!hub || hub.closed || typeof hub.closed == 'undefined') {

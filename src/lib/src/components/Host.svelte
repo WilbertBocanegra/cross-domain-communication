@@ -25,12 +25,12 @@
 		const hasPermissions = document.hasStorageAccess ? await document.hasStorageAccess() : true;
 
 		if ($page.url.searchParams.get('sync')) {
-			window.opener.parent.postMessage({ action: ActionE.MOUNT, data: { hasPermissions } }, client);
+			window.opener.parent.postMessage({ action: ActionE.MOUNT, hasPermissions }, client);
 			window.close();
 			return;
 		}
 
-		sendRequest({ action: ActionE.MOUNT, data: { hasPermissions } });
+		sendRequest({ action: ActionE.MOUNT, hasPermissions });
 	});
 </script>
 

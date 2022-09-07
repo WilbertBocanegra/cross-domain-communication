@@ -10,6 +10,7 @@ interface MessageEvents<T = unknown> {
 	data?: T;
 	key: string;
 	message: string;
+	hasPermissions?: boolean;
 }
 
 interface ResponseEvent<T = unknown> {
