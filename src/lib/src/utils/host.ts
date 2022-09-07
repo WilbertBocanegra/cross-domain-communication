@@ -14,31 +14,45 @@ const handleMessage = (e: MessageEvent<MessageEvents>) => {
 	}
 
 	if (e.data.action === ActionE.GET) {
-		/**
-		 * @description send data of storage
-		 */
+		const raw = localStorage.getItem(e.data.key);
+		let value;
 
+		try {
+			value = JSON.parse(raw || '');
+		} catch {
+			value = raw?.toString();
+		}
+
+		/** @description send data of storage */
 		sendRequest({
 			action: ActionE.GET,
 			key: e.data.key,
-			data: 'storage',
+			data: value,
 			message: 'message',
 			origin: e.origin
 		});
 	}
 	if (e.data.action === ActionE.SET) {
-		/**
-		 * @description send data of storage
-		 */
+		const raw = e.data.data;
+		const value =
+			raw == null ? null : isObject(raw) || isArray(raw) ? JSON.stringify(raw) : raw.toString();
 
+		if (value) localStorage.setItem(e.data.key, value);
+		else localStorage.removeItem(e.data.key);
+
+		/** @description send data of storage */
 		sendRequest({
 			action: ActionE.SET,
 			key: e.data.key,
-			data: 'storage',
+			data: e.data.data || null,
 			message: 'message',
 			origin: e.origin
 		});
 	}
 };
+
+const isObject = (raw: unknown) => typeof raw === 'object' && raw != null && !Array.isArray(raw);
+
+const isArray = (raw: unknown) => typeof raw === 'object' && raw != null && Array.isArray(raw);
 
 export { handleMessage };

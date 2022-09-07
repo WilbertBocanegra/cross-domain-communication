@@ -2,7 +2,7 @@ import type { ActionE } from '../enum';
 
 /**
  * @author Wilbert Bocanegra Velazquez / Core Team
- * @author - if you modify this file added in this comment or another comment with @author 
+ * @author - if you modify this file added in this comment or another comment with @author
  */
 
 interface MessageEvents<T = unknown> {

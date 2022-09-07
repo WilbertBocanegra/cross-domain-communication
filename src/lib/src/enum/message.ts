@@ -1,6 +1,6 @@
 /**
  * @author Wilbert Bocanegra Velazquez / Core Team
- * @author - if you modify this file added in this comment or another comment with @author 
+ * @author - if you modify this file added in this comment or another comment with @author
  */
 
 enum ActionE {

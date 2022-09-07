@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { handleMessage, setAccess, sendRequest } from '../utils';
 	import { ActionE } from '../enum';
+	import { client, handleMessage, sendRequest, setAccess } from '../utils';
 
 	/**
-	 * @author Wilbert Bocanegra Velazquez / Core Team 
-	 * @author - if you modify this file added in this comment or another comment with @author in a new line 
+	 * @author Wilbert Bocanegra Velazquez / Core Team
+	 * @author - if you modify this file added in this comment or another comment with @author in a new line
 	 */
 
 	/**
@@ -19,9 +20,17 @@
 	 * */
 	export let accessList: string[] | string;
 
-	onMount(() => {
+	onMount(async () => {
 		setAccess(accessList);
-		sendRequest({ action: ActionE.MOUNT });
+		const hasPermissions = document.hasStorageAccess ? await document.hasStorageAccess() : true;
+
+		if ($page.url.searchParams.get('sync')) {
+			window.opener.parent.postMessage({ action: ActionE.MOUNT, data: { hasPermissions } }, client);
+			window.close();
+			return;
+		}
+
+		sendRequest({ action: ActionE.MOUNT, data: { hasPermissions } });
 	});
 </script>
 

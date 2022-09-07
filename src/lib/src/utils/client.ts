@@ -1,6 +1,5 @@
-import { detect } from 'detect-browser';
-import type { ResponseEvent, InputGet, MessageEvents, InputSet } from '../interfaces';
 import { ActionE } from '../enum';
+import type { InputGet, InputSet, MessageEvents, ResponseEvent } from '../interfaces';
 
 /**
  * @author Wilbert Bocanegra Velazquez / Core Team
@@ -11,8 +10,6 @@ import { ActionE } from '../enum';
 
 /** @type {string} */
 let client: string;
-
-const browser = detect();
 
 const setClient = ({ uri }: { uri: string }) => {
 	client = uri;
@@ -26,7 +23,10 @@ const createIFrame = (): HTMLIFrameElement => {
 	return iframe;
 };
 
-const set = <T>({ key }: InputSet<T>): Promise<ResponseEvent<T>> =>
+const set = <T extends { [key: string]: unknown }>({
+	key,
+	data
+}: InputSet<T>): Promise<ResponseEvent<T>> =>
 	new Promise((resolve) => {
 		if (!client) {
 			throw new Error('Uri client not found');
@@ -43,11 +43,20 @@ const set = <T>({ key }: InputSet<T>): Promise<ResponseEvent<T>> =>
 		 */
 		const handleMessage = (e: MessageEvent<MessageEvents<T>>) => {
 			if (e.data.action === ActionE.MOUNT) {
-				if (browser?.name != 'chrome') {
-					//code of browser
-				} else {
-					iframe.contentWindow?.postMessage({ action: ActionE.SET, key }, client);
+				if (e.data.data && !e.data.data.hasPermissions) {
+					const hub = window.open(`${client}/?sync=true`);
+
+					if (!hub || hub.closed || typeof hub.closed == 'undefined') {
+						const customEvent = new CustomEvent('popupPermissionStatus', {
+							detail: { status: false }
+						});
+						window.dispatchEvent(customEvent);
+					}
+
+					return;
 				}
+
+				iframe.contentWindow?.postMessage({ action: ActionE.SET, key, data }, client);
 			}
 			if (e.data.action === ActionE.SET) {
 				resolve({ key, message: e.data.message, data: e.data.data });
@@ -71,7 +80,7 @@ const set = <T>({ key }: InputSet<T>): Promise<ResponseEvent<T>> =>
  * @param {key:string}
  * @returns
  */
-const get = <T>({ key }: InputGet): Promise<ResponseEvent<T>> =>
+const get = <T extends { hasPermissions: boolean }>({ key }: InputGet): Promise<ResponseEvent<T>> =>
 	new Promise((resolve) => {
 		if (!client) {
 			throw new Error('Uri client not found');
@@ -88,12 +97,21 @@ const get = <T>({ key }: InputGet): Promise<ResponseEvent<T>> =>
 		 */
 		const handleMessage = (e: MessageEvent<MessageEvents<T>>) => {
 			if (e.data.action === ActionE.MOUNT) {
-				if (browser?.name == 'chrome') {
-					iframe.contentWindow?.postMessage({ action: ActionE.GET, key }, client);
-				} else {
-					//code of browser
-					console.log(browser?.name);
+				const { data } = e.data;
+				if (data && !data.hasPermissions) {
+					const hub = window.open(`${client}/?sync=true`);
+
+					if (!hub || hub.closed || typeof hub.closed == 'undefined') {
+						const customEvent = new CustomEvent('popupPermissionStatus', {
+							detail: { status: false }
+						});
+						window.dispatchEvent(customEvent);
+					}
+
+					return;
 				}
+
+				iframe.contentWindow?.postMessage({ action: ActionE.GET, key }, client);
 			}
 			if (e.data.action === ActionE.GET) {
 				resolve({ key: e.data.key, message: e.data.message, data: e.data.data });

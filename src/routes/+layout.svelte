@@ -6,5 +6,5 @@
 	setClient({ uri: PUBLIC_URI_IFRAME });
 </script>
 
-<Host accessList={["http://192.168.100.105:5173"]} />
+<Host accessList={['http://192.168.100.105:5173']} />
 <slot />

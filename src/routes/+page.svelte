@@ -4,7 +4,7 @@
 
 	onMount(async () => {
 		const hello = await get<string>({ key: 'hello' });
-		console.log("aqui",hello);
+		console.log('aqui', hello);
 	});
 </script>
 
