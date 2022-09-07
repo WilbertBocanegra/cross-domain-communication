@@ -1,1 +1,1 @@
-export { EMessage } from './message';
+export { ActionE } from './message';

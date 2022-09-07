@@ -1,27 +1,28 @@
 <script lang="ts">
-	/**
-	 * @author Wilbert Bocanegra Velazquez / Core Team Softengy
-	 */
 	import { onMount } from 'svelte';
-	import { EMessage } from '../enum';
-	import { sendMessage } from '$lib/index.js';
-	import { handleMessage, setOrigin } from '$lib/index.js';
+	import { handleMessage, setAccess, sendRequest } from '../utils';
+	import { ActionE } from '../enum';
 
 	/**
-	 *
-	 * @example
-	 * ["xx.xx.xx"]
-	 *
-	 * @default string[] | string
+	 * @author Wilbert Bocanegra Velazquez / Core Team 
+	 * @author - if you modify this file added in this comment or another comment with @author in a new line 
 	 */
-	export let accessList: string[];
+
+	/**
+	 * @type { string[] | string }
+	 * @description List of domains to accept communication
+	 * @example
+	 * 	const domains = ["http://domain.example"]
+	 *  or
+	 * 	const domains = "['http://domain.example']"
+	 * @default string[] | string
+	 * */
+	export let accessList: string[] | string;
 
 	onMount(() => {
-		setOrigin(accessList);
-		sendMessage({ action: EMessage.MOUNT });
+		setAccess(accessList);
+		sendRequest({ action: ActionE.MOUNT });
 	});
 </script>
 
 <svelte:window on:message={handleMessage} />
-
-

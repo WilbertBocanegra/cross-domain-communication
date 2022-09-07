@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import { setHost, uriIFrame, setClient } from '$lib/index.js';
+	import { get, set } from '$lib';
 	import { onMount } from 'svelte';
 
-	onMount(() => {
-		//window.postMessage({ key: 'hola', action: 'GET' }, 'http://192.168.100.105:5175');
+	onMount(async () => {
+		const hello = await get<string>({ key: 'hello' });
+		console.log("aqui",hello);
 	});
 </script>
 

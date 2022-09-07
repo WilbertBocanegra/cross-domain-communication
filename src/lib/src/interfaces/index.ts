@@ -1,1 +1,1 @@
-export type { IMessage, IMessageEvent, Handle ,HandleGet} from './message';
+export type { MessageEvents, ResponseEvent, InputGet, InputSet } from './events';
